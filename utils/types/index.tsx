@@ -171,3 +171,12 @@ export type FeaturedCard = {
   created_at: string;
   like_count: number;
 };
+export type UserAwards = {
+  awardId: string;
+  userId: string;
+  awardTitle: string;
+  awardImage: string;
+  category: string;
+  awardDescription: string;
+  createdAt: string;
+};

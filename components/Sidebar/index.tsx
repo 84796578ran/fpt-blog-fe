@@ -36,6 +36,8 @@ function Sidebar(): JSX.Element {
   const router = useRouter();
   const items: MenuItem[] = [
     getItem("Home", "/", <HomeOutlined />),
+    getItem("Award", "/awards",<AppstoreOutlined />),
+
     getItem("Create Blog", "/blog/create", <AppstoreAddOutlined />),
 
     getItem("Blogs", "sub1", <AppstoreOutlined />, [

@@ -82,7 +82,7 @@ function PendingBlog({ params }: PageProps & PendingBlogProps) {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
-        if (currentUserRole === 2) {
+        if (currentUserRole === 1) {
           await rejectBlog(blogId, access_token);
           toast.success("Blog rejected!");
           removeCheckedBlog(blogId);
