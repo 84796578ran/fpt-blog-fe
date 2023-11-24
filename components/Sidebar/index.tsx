@@ -8,6 +8,7 @@ import {
   UserOutlined,
   AppstoreAddOutlined,
   HomeOutlined,
+  StarOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -36,7 +37,7 @@ function Sidebar(): JSX.Element {
   const router = useRouter();
   const items: MenuItem[] = [
     getItem("Home", "/", <HomeOutlined />),
-    getItem("Award", "/awards",<AppstoreOutlined />),
+    getItem("Award", "/awards",<StarOutlined />),
 
     getItem("Create Blog", "/blog/create", <AppstoreAddOutlined />),
 
