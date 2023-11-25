@@ -14,10 +14,11 @@ import { socicalButton } from "@/utils/elements";
 import { timeAgo } from "@/utils/dayFormat";
 import { getCookie } from "cookies-next";
 import { getBlogByID, saveBlog, unsaveBlog } from "@/apis/blog";
-import { BlogDetail } from "@/utils/types";
+import { BlogDetail, Tag } from "@/utils/types";
 import { Socket } from "socket.io-client";
 import { checkLikedPost, checkSavedPost, getLike } from "@/apis/like";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 interface ContentDetailProps {
   setBlogData: React.Dispatch<React.SetStateAction<BlogDetail | undefined>>;
@@ -65,7 +66,8 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
       try {
         if (access_token && blog_id) {
           const blogResponse = await getBlogByID(blog_id, access_token);
-          setBlogData(blogResponse.data.blogData);
+          setBlogData(blogResponse.data[0]);
+          console.log(blogResponse)
         }
       } catch (error) {}
     };
@@ -239,14 +241,15 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
         </div>
         <div className="w-full  gap-[10px] flex items-center">
           <Image src={TagIcon} alt="tag icon" height={24} width={24}></Image>
-          {blogData?.tag_titles.map((tag, index) => (
-            <div
-              key={index}
-              className="rounded-[6px] py-[2px] px-[10px] bg-green-100 text-green-500 text-sm"
-            >
-              {tag}
-            </div>
-          ))}
+          { blogData?.tags ? ( blogData?.tags.map((tag:Tag) => (
+           <Link href={`/blog/tag-blog/list/${tag.tag_id}/1`}> 
+           <div
+           key={tag.tag_id}
+           className="rounded-[6px] py-[2px] px-[10px] bg-green-100 text-green-500 text-sm"
+         >
+           {tag.title}
+         </div></Link>
+          ))) : ""}
         </div>
       </div>
       <div className="w-full flex flex-col ">

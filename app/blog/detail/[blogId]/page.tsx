@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { LinearProgress } from "@mui/material";
 const socket = io("http://localhost:5000");
+console.log(socket)
+console.log(socket)
 function BlogDetail() {
   const [blogData, setBlogData] = useState<BlogDetail>();
   const [isFetchingData, setIsFetchingData] = useState<boolean>(true);

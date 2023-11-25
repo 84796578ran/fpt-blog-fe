@@ -65,6 +65,11 @@ export type BlogData = {
   published_at: string;
 };
 
+export type Tag = {
+  tag_id: string;
+  title: string
+}
+
 export type BlogDetail = {
   blog_id: string;
   user_name: string;
@@ -74,10 +79,11 @@ export type BlogDetail = {
   content: string;
   status: number;
   view: number;
-  tag_titles: string[];
+  tags: Tag[];
   visual: string | null;
   created_at: string;
   published_at: string;
+  rejectionReason?: string;
 };
 
 export type Comment = {

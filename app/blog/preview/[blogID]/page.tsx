@@ -31,7 +31,7 @@ function DetailBLogList() {
       const blog_id = param.blogID as string;
       if (access_token && blog_id) {
         const blogResponse = await getBlogByID(blog_id, access_token);
-        setBlogData(blogResponse.data.blogData);
+        setBlogData(blogResponse.data[0]);
         setIsLoading(false);
       }
     } catch (error) {}
@@ -153,13 +153,13 @@ function DetailBLogList() {
                 <div className="flex w-full items-center gap-2">
                   <Image src={TagIcon} alt="Tag" height={24} width={24}></Image>
                   <div className="w-full flex items-center gap-[10px]">
-                    {blogData?.tag_titles ? (
-                      blogData.tag_titles.map((tag, index) => (
+                    {blogData?.tags ? (
+                      blogData.tags.map((tag, index) => (
                         <div
                           key={index}
                           className="bg-green-100 cursor-default rounded-[6px] text-green-800 text-sm px-[10px] py-1 font-medium"
                         >
-                          {tag}
+                          {tag.title}
                         </div>
                       ))
                     ) : (

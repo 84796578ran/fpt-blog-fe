@@ -56,7 +56,14 @@ function YourBlog({ params }: PageProps) {
             );
             setBLogData(filteredBlogs);
           } else {
-            setBLogData(response.data.data);
+            const updatedBlogs = response.data.data.map((blog: BlogDetail) => {
+              // Gán giá trị rejectionReason nếu có
+              return {
+                ...blog,
+                rejectionReason: blog.rejectionReason || "", // Thay "" bằng giá trị mặc định khác nếu cần
+              };
+            });
+            setBLogData(updatedBlogs);
             setTotalPages(response.data.total_pages);
           }
         }

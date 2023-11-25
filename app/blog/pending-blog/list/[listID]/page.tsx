@@ -78,12 +78,12 @@ function PendingBlog({ params }: PageProps & PendingBlogProps) {
     }
   };
 
-  const handleRejectBlog = async (blogId: string) => {
+  const handleRejectBlog = async (blogId: string, rejectionReason?: string) => {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
         if (currentUserRole === 1) {
-          await rejectBlog(blogId, access_token);
+          await rejectBlog(blogId, access_token, rejectionReason);
           toast.success("Blog rejected!");
           removeCheckedBlog(blogId);
         } else {
