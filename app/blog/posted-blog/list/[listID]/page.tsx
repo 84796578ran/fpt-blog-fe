@@ -60,7 +60,7 @@ function YourBlog({ params }: PageProps) {
               // Gán giá trị rejectionReason nếu có
               return {
                 ...blog,
-                rejectionReason: blog.rejectionReason || "", // Thay "" bằng giá trị mặc định khác nếu cần
+                rejectionReason: blog.reject_reason || "", // Thay "" bằng giá trị mặc định khác nếu cần
               };
             });
             setBLogData(updatedBlogs);
