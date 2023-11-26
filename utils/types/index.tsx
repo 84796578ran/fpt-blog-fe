@@ -83,7 +83,7 @@ export type BlogDetail = {
   visual: string | null;
   created_at: string;
   published_at: string;
-  rejectionReason?: string;
+  reject_reason: string;
 };
 
 export type Comment = {

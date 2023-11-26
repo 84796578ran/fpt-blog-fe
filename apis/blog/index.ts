@@ -2,6 +2,7 @@ import axiosClient from "@/utils/axiosClient/index";
 
 export const END_POINT = {
   CREATE: "/blogs/create",
+  CREATE_REJECT: "/blogs/create-reject",
   CREATE_BLOG_TAGS: "/blogs/create/blog-tags",
   GET_POSTED: "/blogs/posted/",
   GET_PENDING: "/blogs/pending",
@@ -27,6 +28,12 @@ type createBlog = {
   htmlString: string;
   status: number;
   visual: string | undefined | null;
+};
+type createReject = {
+  user_id: string;
+  blog_id: string;
+  reject_reason: string;
+  
 };
 
 type blogTags = {
@@ -64,6 +71,23 @@ export const createBlog = async (payload: createBlog) => {
     return {
       success: false,
       message: "Failed to create a blog",
+      error: error.message,
+    };
+  }
+};
+
+export const createReject = async (payload: createReject) => {
+  try {
+    const response = await axiosClient.post(END_POINT.CREATE_REJECT, {
+      user_id: payload.user_id,
+      blog_id: payload.blog_id,
+      reject_reason: payload.reject_reason,
+    });
+    return response.data;
+  } catch (error: any) {
+    return {
+      success: false,
+      message: "Failed to create a reject",
       error: error.message,
     };
   }
@@ -172,8 +196,8 @@ export const approveBlog = (blog_id: string, access_token: string | null) => {
   });
 };
 
-export const rejectBlog = (blog_id: string, access_token: string | null, rejectionReason?: string) => {
-  return axiosClient.patch(`${END_POINT.REJECT}${blog_id}`, { rejectionReason }, {
+export const rejectBlog = (blog_id: string, access_token: string | null) => {
+  return axiosClient.patch(`${END_POINT.REJECT}${blog_id}`, {
     headers: { Authorization: `Bearer ${access_token}` },
   });
 };

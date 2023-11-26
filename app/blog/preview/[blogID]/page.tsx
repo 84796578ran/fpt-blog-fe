@@ -187,7 +187,8 @@ function DetailBLogList() {
                   }}
                 ></div>
               </div>
-              <div className="w-full flex justify-end">
+              <div className="w-full flex justify-between">
+                <p className=""> Reason: <span className="text-red-500">{blogData?.reject_reason ?? ""}</span></p>
                 <BlogStatus status={blogData?.status}></BlogStatus>
               </div>
             </div>
