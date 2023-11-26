@@ -37,7 +37,7 @@ function Sidebar(): JSX.Element {
   const router = useRouter();
   const items: MenuItem[] = [
     getItem("Home", "/", <HomeOutlined />),
-    getItem("Award", "/awards",<StarOutlined />),
+    // getItem("Award", "/awards",<StarOutlined />),
 
     getItem("Create Blog", "/blog/create", <AppstoreAddOutlined />),
 
@@ -50,6 +50,12 @@ function Sidebar(): JSX.Element {
     getItem("Profile", "sub2", <UserOutlined />, [
       getItem("View Profile", `/profile/${userId}`),
       getItem("Profile Setting", `/profile/setting/${userId}`),
+    ]),
+    getItem("Award", "sub3", <StarOutlined />, [
+      getItem("User Award", "/awards/useraward/"),
+      getItem("Moderator Award", "/awards/moderatoraward/"),
+      
+      
     ]),
   ];
   const onClick: MenuProps["onClick"] = (e) => {

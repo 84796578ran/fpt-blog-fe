@@ -178,11 +178,21 @@ export type FeaturedCard = {
   like_count: number;
 };
 export type UserAwards = {
-  awardId: string;
-  userId: string;
-  awardTitle: string;
-  awardImage: string;
-  category: string;
-  awardDescription: string;
-  createdAt: string;
+  full_name: string;
+  image: string;
+  total_likes: number;
+user_id: string;
+  
+};
+export type ModeratorAwards = {
+  full_name: string;
+  image: string;
+total_likes: number;
+user_id: string;
+  
+};
+
+export type rejectionReason = {
+  
+  
 };

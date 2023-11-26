@@ -2,30 +2,25 @@
 // Import necessary modules and components
 import React, { useEffect, useState } from "react";
 
-import AwardCard from "@/components/AwardCard"; // You would need to create this component
+import AwardModeratorCard from "@/components/AwardModeratorCard"; // You would need to create this component
 import { getCookie } from "cookies-next";
- import { getAllAwards } from "@/apis/awards"; // You would need to create this API function
+ import { getAwardModerator} from "@/apis/awards"; // You would need to create this API function
 import type { MenuProps } from "antd";
 import { Button, Dropdown } from "antd";
 import axios from "axios";
-import { UserAwards } from "@/utils/types"; // You would need to define this type
+import { ModeratorAwards } from "@/utils/types"; // You would need to define this type
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import PagePagination from "@/components/PagePagination";
 import { LinearProgress } from "@mui/material";
 
-// Interface for page props
-interface PageProps {
-  params: { listID: string };
-}
 
-// Awards page component
-function AwardsPage({ params }: PageProps) {
-  const pageNumber = params.listID;
+
+function AwardsPage() {
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
-  const [awardsData, setAwardsData] = useState<UserAwards[]>([]);
+  const [awardsData, setAwardsData] = useState<ModeratorAwards[]>([]);
   const [filter, setFilter] = useState<string>("1"); // Assuming 1 is the default filter for all awards
   const items: MenuProps["items"] = [
     {
@@ -35,12 +30,13 @@ function AwardsPage({ params }: PageProps) {
     // Add more filter options as needed
   ];
 
-  const handleGetAwards = async (page: number) => {
+  const handleGetAwards = async () => {
   try {
     const access_token = getCookie("accessToken");
     if (access_token) {
-      const response = await getAllAwards(access_token, page);
-      setAwardsData(response.data.data);
+      const response = await getAwardModerator(access_token);
+      setAwardsData(response.data);
+      console.log(response)
       setTotalPages(response.data.total_pages);
     }
   } catch (error) {
@@ -50,7 +46,7 @@ function AwardsPage({ params }: PageProps) {
   }
 };
   useEffect(() => {
-    handleGetAwards(Number(pageNumber));
+    handleGetAwards();
     setIsFetchingData(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
@@ -69,7 +65,7 @@ function AwardsPage({ params }: PageProps) {
             <div className="mb-[40px] flex flex-col gap-5 w-full">
               <div className="w-full flex items-center justify-between  mb-5">
                 <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
-                  Awards
+                  Awards of Moderator
                 </h1>
                 <Dropdown menu={{ items }} placement="bottomRight" arrow>
                   <Button>Filter</Button>
@@ -77,8 +73,8 @@ function AwardsPage({ params }: PageProps) {
               </div>
               <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
                 {awardsData !== null ? (
-                  awardsData.map((data) => (
-                    <AwardCard key={data.userId} value={data}></AwardCard>
+                  awardsData.map((data, index) => (
+                    <AwardModeratorCard key={index} value={data}></AwardModeratorCard>
                   ))
                 ) : (
                   <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
@@ -86,13 +82,7 @@ function AwardsPage({ params }: PageProps) {
                   </h1>
                 )}
               </div>
-              <div className="w-full flex justify-end mt-5">
-                <PagePagination
-                  totalPages={totalPages}
-                  currentPage={pageNumber}
-                  route={"/awards/list/"}
-                ></PagePagination>
-              </div>
+              
             </div>
           </div>
         )}
@@ -100,5 +90,5 @@ function AwardsPage({ params }: PageProps) {
     </>
   );
 }
-
 export default AwardsPage;
+

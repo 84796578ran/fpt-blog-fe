@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/image";
-import { UserAwards } from "@/utils/types"; 
+import { ModeratorAwards } from "@/utils/types"; 
 import sampleAvatar from "@image/sampleImage.png";
 import Button from "@/components/Button";
 
 interface IProps {
- value: UserAwards;
+ value: ModeratorAwards;
 }
 
-function AwardCard({ value }: IProps) {
+function AwardModeratorCard({ value }: IProps) {
   return (
     <div className="md:max-w-[calc((100%-60px)/3)] sm:w-full rounded-lg overflow-hidden w-full drop-shadow-lg shadow-lg">
       <div className="relative h-[200px]">
@@ -42,4 +42,4 @@ function AwardCard({ value }: IProps) {
   );
 }
 
-export default AwardCard;
+export default AwardModeratorCard;
