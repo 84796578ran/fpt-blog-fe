@@ -2,9 +2,9 @@ import axiosClient from "@/utils/axiosClient/index";
 export const END_POINT = {
   LIKE_POST: "/likes/like-post",
   UNLIKE_POST: "/likes/unlike-post",
-  COUNT_LIKE_BLOG: "likes/blog-like-count/",
-  COUNT_LIKE_COMMENT: "likes/comment-like-count/",
-  COUNT_LIKE_COMMENT_REPLY: "/likes//comment-reply-like-count/",
+  COUNT_LIKE_BLOG: "/likes/blog-like-count/",
+  COUNT_LIKE_COMMENT: "/likes/comment-like-count/",
+  COUNT_LIKE_COMMENT_REPLY: "/likes/comment-reply-like-count/",
   CHECK_LIKE_BLOG: "/likes/check-liked-post/",
   CHECK_LIKE_COMMENT: "/likes/check-liked-comment/",
   CHECK_LIKE_COMMENT_REPLY: "/likes/check-liked-comment-reply/",
@@ -77,7 +77,7 @@ export const checkedLikedComment = (
   comment_id: string
 ) => {
   return axiosClient.get(
-    `${END_POINT.CHECK_LIKE_COMMENT}${user_id}/${comment_id}`,
+    `${END_POINT.CHECK_LIKE_COMMENT}${user_id}${comment_id}`,
     {
       headers: { Authorization: `Bearer ${access_token}` },
     }
@@ -90,7 +90,7 @@ export const checkedLikedCommentReply = (
   comment_id: string
 ) => {
   return axiosClient.get(
-    `${END_POINT.CHECK_LIKE_COMMENT_REPLY}${user_id}/${comment_id}`,
+    `${END_POINT.CHECK_LIKE_COMMENT_REPLY}${user_id}${comment_id}`,
     {
       headers: { Authorization: `Bearer ${access_token}` },
     }

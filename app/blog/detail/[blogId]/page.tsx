@@ -34,7 +34,7 @@ function BlogDetail() {
               blogData={blogData}
             ></Content>
             {/* <RelatedBlog></RelatedBlog> */}
-            <Comment socket={socket}></Comment>
+            {/* <Comment socket={socket}></Comment> */}
           </div>
         )}
       </main>

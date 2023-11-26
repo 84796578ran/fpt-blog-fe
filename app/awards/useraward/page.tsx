@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import AwardCard from "@/components/AwardCard"; // You would need to create this component
 import { getCookie } from "cookies-next";
- import { getAllAwards } from "@/apis/awards"; // You would need to create this API function
+ import {getTop10LikeOfUser } from "@/apis/awards"; // You would need to create this API function
 import type { MenuProps } from "antd";
 import { Button, Dropdown } from "antd";
 import axios from "axios";
@@ -15,13 +15,11 @@ import PagePagination from "@/components/PagePagination";
 import { LinearProgress } from "@mui/material";
 
 // Interface for page props
-interface PageProps {
-  params: { listID: string };
-}
+
 
 // Awards page component
-function AwardsPage({ params }: PageProps) {
-  const pageNumber = params.listID;
+function AwardsPage() {
+
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(false);
@@ -35,12 +33,13 @@ function AwardsPage({ params }: PageProps) {
     // Add more filter options as needed
   ];
 
-  const handleGetAwards = async (page: number) => {
+  const handleGetAwards = async () => {
   try {
     const access_token = getCookie("accessToken");
     if (access_token) {
-      const response = await getAllAwards(access_token, page);
-      setAwardsData(response.data.data);
+      const response = await getTop10LikeOfUser(access_token);
+      setAwardsData(response.data);
+      console.log(response)
       setTotalPages(response.data.total_pages);
     }
   } catch (error) {
@@ -50,7 +49,7 @@ function AwardsPage({ params }: PageProps) {
   }
 };
   useEffect(() => {
-    handleGetAwards(Number(pageNumber));
+    handleGetAwards();
     setIsFetchingData(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
@@ -78,7 +77,7 @@ function AwardsPage({ params }: PageProps) {
               <div className="w-full flex md:flex-row sm:flex-col lg:gap-y-[30px] sm:gap-y-4 flex-wrap lg:gap-x-[30px] sm:gap-x-4 ">
                 {awardsData !== null ? (
                   awardsData.map((data) => (
-                    <AwardCard key={data.userId} value={data}></AwardCard>
+                    <AwardCard key={data.award_id} value={data}></AwardCard>
                   ))
                 ) : (
                   <h1 className="text-[#14375F] font-bold md:text-[30px] md:leading-[45px] text-2xl">
@@ -86,13 +85,7 @@ function AwardsPage({ params }: PageProps) {
                   </h1>
                 )}
               </div>
-              <div className="w-full flex justify-end mt-5">
-                <PagePagination
-                  totalPages={totalPages}
-                  currentPage={pageNumber}
-                  route={"/awards/list/"}
-                ></PagePagination>
-              </div>
+             
             </div>
           </div>
         )}
