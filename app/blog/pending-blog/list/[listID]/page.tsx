@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import PendingBlogCard from "@/components/PendingBlogCard";
 import { getCookie } from "cookies-next";
-import { getPendingBlog, rejectBlog, approveBlog } from "@/apis/blog";
+import { getPendingBlog, rejectBlog, approveBlog, createReject } from "@/apis/blog";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ interface PendingBlogProps {}
 
 function PendingBlog({ params }: PageProps & PendingBlogProps) {
   const pageNumber = params.listID;
+  const user_id = getCookie("user_id") as string
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const [totalPage, setTotalPage] = useState<number>(0);
   const [isFetchingData, setIsFetchingData] = useState<boolean>(true);
@@ -78,12 +79,19 @@ function PendingBlog({ params }: PageProps & PendingBlogProps) {
     }
   };
 
-  const handleRejectBlog = async (blogId: string, rejectionReason?: string) => {
+  const handleRejectBlog = async (blogId: string, rejectionReason: string) => {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
         if (currentUserRole === 1) {
-          await rejectBlog(blogId, access_token, rejectionReason);
+          const reject = {
+            user_id: user_id,
+            blog_id: blogId,
+            reject_reason: rejectionReason
+          }
+          await rejectBlog(blogId, access_token);
+          const response = await createReject(reject)
+          console.log(response)
           toast.success("Blog rejected!");
           removeCheckedBlog(blogId);
         } else {

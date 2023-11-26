@@ -32,6 +32,7 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
   const [isLiked, setIsLiked] = useState<boolean>();
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const blog_id = param.blogId as string;
+  console.log(blog_id)
   const access_token = getCookie("accessToken");
   const user_id = getCookie("user_id") as string;
 
@@ -242,7 +243,7 @@ function Content({ setBlogData, blogData, socket }: ContentDetailProps) {
         <div className="w-full  gap-[10px] flex items-center">
           <Image src={TagIcon} alt="tag icon" height={24} width={24}></Image>
           { blogData?.tags ? ( blogData?.tags.map((tag:Tag) => (
-           <Link href={`/blog/tag-blog/list/${tag.tag_id}/1`}> 
+           <Link key={tag.tag_id} href={`/blog/tag-blog/list/${tag.tag_id}/1`}> 
            <div
            key={tag.tag_id}
            className="rounded-[6px] py-[2px] px-[10px] bg-green-100 text-green-500 text-sm"

@@ -83,7 +83,7 @@ export type BlogDetail = {
   visual: string | null;
   created_at: string;
   published_at: string;
-  rejectionReason?: string;
+  reject_reason: string;
 };
 
 export type Comment = {
@@ -177,6 +177,8 @@ export type FeaturedCard = {
   created_at: string;
   like_count: number;
 };
+
+
 export type UserAwards = {
   full_name: string;
   image: string;
@@ -195,4 +197,7 @@ user_id: string;
 export type rejectionReason = {
   
   
+  award_id: string;
+  user_id: string;
+  user_name: string;  
 };

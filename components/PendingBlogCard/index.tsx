@@ -8,7 +8,7 @@ import { timeAgo } from "@/utils/dayFormat";
 interface IProps {
   value: BlogDetail;
   functionApprove: (blog_id: string) => void;
-  functionReject: (blog_id: string, rejectionReason?: string) => void;
+  functionReject: (blog_id: string, rejectionReason: string) => void;
 }
 
 function PendingBlogCard({ value, functionApprove, functionReject }: IProps) {
